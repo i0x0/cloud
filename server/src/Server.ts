@@ -29,6 +29,7 @@ export default class Server {
 
   constructor() {
     this.addPlugins()
+    this.addRandom()
   }
 
   async addPlugins() {
@@ -62,7 +63,7 @@ export default class Server {
   addRandom() {
     this.server.addHook('onReady', async () => {
       info('connecting to mongodb')
-      await mongoose.connect(Bun.env.MONGODB!, { serverApi: { version: '1', strict: true, deprecationErrors: true } })
+      mongoose.connect(Bun.env.MONGODB!, { serverApi: { version: '1', strict: true, deprecationErrors: true } })
     })
 
     this.server.addHook('onClose', async () => {

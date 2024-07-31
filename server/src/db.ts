@@ -15,15 +15,15 @@ const userSchema = new Schema<IUser>({
     type: String, required: true
   },
   settings: {
-    type: String, required: true
+    type: String, required: false
   },
   mods: {
     type: [String],
-    required: true
+    required: false
   },
   saves: {
     type: [String],
-    required: true
+    required: false
   }
 })
 

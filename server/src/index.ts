@@ -10,7 +10,7 @@ try {
   }
   let x = new Server()
   x.start()
-  //info(x.server.db.connection.id!)
+  info(x.server.db.connection.id!)
 
 } catch (e) {
   error(`Server error: ${e}`)
