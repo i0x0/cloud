@@ -1,0 +1,40 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.2'
+	id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'io.i0x0'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+ext{
+    //the build number that this mod is made for
+    mindustryVersion = 'v146'
+    jabelVersion = "93fde537c7"
+
+}
+
+repositories {
+	mavenCentral()
+	maven{ url "https://raw.githubusercontent.com/Zelaux/MindustryRepo/master/repository" }
+  maven{ url 'https://www.jitpack.io' }
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	compileOnly "com.github.Anuken.Mindustry:core:$mindustryVersion"
+	annotationProcessor "com.github.Anuken:jabel:$jabelVersion"
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
