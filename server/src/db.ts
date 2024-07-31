@@ -1,4 +1,4 @@
-import { Schema } from "mongoose"
+import { model, Schema } from "mongoose"
 
 interface IUser {
   email: string,
@@ -18,6 +18,13 @@ const userSchema = new Schema<IUser>({
     type: String, required: true
   },
   mods: {
-    type: []
+    type: [String],
+    required: true
+  },
+  saves: {
+    type: [String],
+    required: true
   }
 })
+
+export const User = model<IUser>('User', userSchema)
