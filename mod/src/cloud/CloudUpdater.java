@@ -20,6 +20,7 @@ public class CloudUpdater extends Mod {
             // show dialog upon startup
             Time.runTask(10f, () -> {
                 BaseDialog dialog = new BaseDialog("frog");
+                // dialog.cont.
                 dialog.cont.add("behold").row();
                 // mod sprites are prefixed with the mod name (this mod is called
                 // 'example-java-mod' in its config)
