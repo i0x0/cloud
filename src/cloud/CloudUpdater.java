@@ -1,4 +1,4 @@
-package example;
+package cloud;
 
 import arc.*;
 import arc.util.*;
@@ -9,19 +9,21 @@ import mindustry.gen.*;
 import mindustry.mod.*;
 import mindustry.ui.dialogs.*;
 
-public class ExampleJavaMod extends Mod{
+public class CloudUpdater extends Mod {
 
-    public ExampleJavaMod(){
-        Log.info("Loaded ExampleJavaMod constructor.");
+    public CloudUpdater() {
+        Log.info("loaded cloud");
+        // Log.info(Core.app.);
 
-        //listen for game load event
+        // listen for game load event
         Events.on(ClientLoadEvent.class, e -> {
-            //show dialog upon startup
+            // show dialog upon startup
             Time.runTask(10f, () -> {
                 BaseDialog dialog = new BaseDialog("frog");
                 dialog.cont.add("behold").row();
-                //mod sprites are prefixed with the mod name (this mod is called 'example-java-mod' in its config)
-                dialog.cont.image(Core.atlas.find("example-java-mod-frog")).pad(20f).row();
+                // mod sprites are prefixed with the mod name (this mod is called
+                // 'example-java-mod' in its config)
+                dialog.cont.image(Core.atlas.find("cloud-frog")).pad(20f).row();
                 dialog.cont.button("I see", dialog::hide).size(100f, 50f);
                 dialog.show();
             });
@@ -29,7 +31,7 @@ public class ExampleJavaMod extends Mod{
     }
 
     @Override
-    public void loadContent(){
+    public void loadContent() {
         Log.info("Loading some example content.");
     }
 
