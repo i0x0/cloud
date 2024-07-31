@@ -1,5 +1,5 @@
 import { cleanEnv, num, str } from "envalid";
-import type { FastifyInstance } from "fastify";
+import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import Fastify from "fastify";
 import { error, info, ok } from "./utils";
 import type { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
@@ -33,29 +33,16 @@ export default class Server {
   }
 
   async addPlugins() {
-    [{
-      name: '@fastify/helmet',
-      contentSecurityPolicy: false
-    },
-    {
-      name: '@fastify/jwt',
-      opt: {
-        secret: this.env.SECRET
-      },
-    }, {
-      name: '@fastify/compress'
-    },
-    {
-      name: '@fastify/sensible'
-    },
-    {
-      name: '@fastify/rate-limit'
-    }].forEach(x => {
-      this.server.register(import(x.name), {
-        ...x.opt
-      })
-      info(`added ${x.name}`)
+    this.server.register(import('@fastify/rate-limit'))
+    this.server.register(import('@fastify/sensible'))
+    this.server.register(import('@fastify/compress'))
+    this.server.register(import('@fastify/jwt'), {
+      secret: this.env.SECRET
     })
+    this.server.register(import('@fastify/helmet'), {
+      contentSecurityPolicy: false
+    })
+
     this.server.register(router)
     this.server.decorate('db', mongoose)
   }
@@ -69,6 +56,15 @@ export default class Server {
     this.server.addHook('onClose', async () => {
       info('disconnected to mongodb')
       await mongoose.disconnect()
+    })
+
+    this.server.decorate("authenticate", async function (req: FastifyRequest, rep: FastifyReply) {
+      try {
+        await req.jwtVerify()
+      } catch (err) {
+        req.unauthorized()
+        //reply.send(err)
+      }
     })
   }
   start(port: number = this.env.PORT) {
